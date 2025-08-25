@@ -32,9 +32,10 @@ RUN composer install --optimize-autoloader --no-dev
 
 # Da permisos a storage y bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
 # Expone el puerto 8000
 EXPOSE 8000
 
-# Comando para iniciar Laravel con el servidor embebido
-CMD if [ -z "$APP_KEY" ]; then php artisan key:generate --force; fi && php artisan serve --host=0.0.0.0 --port=8000
+# Comando para iniciar Laravel con el servidor embebido y ejecutar migraciones
+CMD if [ -z "$APP_KEY" ]; then php artisan key:generate --force; fi && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
