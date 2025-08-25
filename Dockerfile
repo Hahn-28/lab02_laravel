@@ -20,6 +20,9 @@ WORKDIR /var/www
 # Copia el código fuente
 COPY . .
 
+# Copia el archivo .env.example como .env si no existe
+RUN [ -f .env ] || cp .env.example .env
+
 # Instala dependencias de Laravel
 RUN composer install --optimize-autoloader --no-dev
 
