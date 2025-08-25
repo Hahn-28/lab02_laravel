@@ -9,7 +9,11 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    curl
+    curl \
+    libpq-dev
+
+# Instala extensiones de PHP necesarias
+RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Instala Composer
 COPY --from=composer:2.5 /usr/bin/composer /usr/bin/composer
