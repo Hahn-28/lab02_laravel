@@ -30,4 +30,4 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8000
 
 # Comando para iniciar Laravel con el servidor embebido
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD if [ -z "$APP_KEY" ]; then php artisan key:generate --force; fi && php artisan serve --host=0.0.0.0 --port=8000
